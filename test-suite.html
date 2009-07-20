@@ -18,7 +18,7 @@
     
     <script type="text/javascript">
       Screw.Unit(function() {
-        describe("Ext.flatten", function() {
+        describe("Ext.flatten an array", function() {
           it("returns non-array input directly", function() {
             expect(Ext.flatten('abc')).to(equal, 'abc');
           });
@@ -45,6 +45,23 @@
           });
           it("flattens an array with two nested sub-arrays", function() {
             expect(Ext.flatten([1,2,[3,4,[5,6]]])).to(equal, [1,2,3,4,5,6]);
+          });
+        });
+        describe("Ext.flattenTree an array of Node data structures", function() {
+          it("flattens a single Node", function() {
+            expect(Ext.flattenTree([{id:'abc'}])).to(equal, [{id:'abc'}]);
+          });
+          it("flattens a single Node including extra attributes", function() {
+            expect(Ext.flattenTree([{id:'abc',foo:'bar',baz:'poop'}],['foo','baz'])).to(equal, [{id:'abc',foo:'bar',baz:'poop'}]);
+          });
+          it("flattens two Nodes", function() {
+            expect(Ext.flattenTree([{id:'abc'},{id:'xyz'}])).to(equal, [{id:'abc'},{id:'xyz'}]);
+          });
+          it("flattens a Node with a child", function() {
+            expect(Ext.flattenTree([{id:'abc',children:[{id:'xyz'}]}])).to(equal, [{id:'abc'},{id:'xyz'}]);
+          });
+          it("flattens a Node with a child that has a child", function() {
+            expect(Ext.flattenTree([{id:'abc',children:[{id:'xyz',children:[{id:'qrs'}]}]}])).to(equal, [{id:'abc'},{id:'xyz'},{id:'qrs'}]);
           });
         });
       });
