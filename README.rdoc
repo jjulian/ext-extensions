@@ -1,0 +1,8 @@
+= ext-extensions
+
+Some simple extensions to ExtJS 2.2.1 and 3.0.0
+
+Currently implemented: 
+* Ext.flatten(array) - flattens an array of sub-arrays into one array
+
+ExtJS 2.2.1 and 3.0.0 are loaced in /ext2 and /ext3 dirs. Fully tested using ScrewUnit (located in /lib).

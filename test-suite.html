@@ -1,0 +1,54 @@
+<html>
+  <head>
+    <script src="lib/jquery-1.2.6.js"></script>
+    <script src="lib/jquery.fn.js"></script>
+    <script src="lib/jquery.print.js"></script>
+    <script src="lib/screw.builder.js"></script>
+    <script src="lib/screw.matchers.js"></script>
+    <script src="lib/screw.events.js"></script>
+    <script src="lib/screw.behaviors.js"></script>
+    <!-- ExtJS 2.2.1 -->
+    <script src="ext2/ext-base.js"></script>
+    <script src="ext2/ext-all-debug.js"></script>
+    <!-- ExtJS 3.0.0
+    <script src="ext3/ext-base-debug.js"></script>
+    <script src="ext3/ext-all-debug.js"></script> -->
+    <script src="ext-extensions.js"></script>
+    <link rel="stylesheet" href="lib/screw.css">
+    
+    <script type="text/javascript">
+      Screw.Unit(function() {
+        describe("Ext.flatten", function() {
+          it("returns non-array input directly", function() {
+            expect(Ext.flatten('abc')).to(equal, 'abc');
+          });
+          it("returns non-array input directly", function() {
+            expect(Ext.flatten(42)).to(equal, 42);
+          });
+          it("returns non-array input directly", function() {
+            expect(Ext.flatten({id:42})).to(equal, {id:42});
+          });
+          it("flattens an array with zero elements", function() {
+            expect(Ext.flatten([])).to(equal, []);
+          });
+          it("flattens an array with one element", function() {
+            expect(Ext.flatten([1])).to(equal, [1]);
+          });
+          it("flattens an array with more than one element", function() {
+            expect(Ext.flatten([1,2])).to(equal, [1,2]);
+          });
+          it("flattens an array with one sub-array", function() {
+            expect(Ext.flatten([1,2,[3,4]])).to(equal, [1,2,3,4]);
+          });
+          it("flattens an array with two sub-arrays", function() {
+            expect(Ext.flatten([1,2,[3,4],5,[6,7]])).to(equal, [1,2,3,4,5,6,7]);
+          });
+          it("flattens an array with two nested sub-arrays", function() {
+            expect(Ext.flatten([1,2,[3,4,[5,6]]])).to(equal, [1,2,3,4,5,6]);
+          });
+        });
+      });
+    </script>
+  </head>
+  <body></body>
+</html>
