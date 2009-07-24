@@ -7,3 +7,4 @@ Currently implemented:
 * Ext.flattenTree(array) - flattens an array of Nodes with 'children' into one array of Nodes
 
 ExtJS 2.2.1 and 3.0.0 are loaced in /ext2 and /ext3 dirs. Fully tested using ScrewUnit (located in /lib).
+
