@@ -22,6 +22,8 @@ Ext.grid.PanelRowExpander = function(config){
         beforecollapse: true,
         collapse: true
     });
+    
+    this.expandingRowPanels = {};
 };
 
 Ext.extend(Ext.grid.PanelRowExpander, Ext.util.Observable, {
@@ -55,9 +57,12 @@ Ext.extend(Ext.grid.PanelRowExpander, Ext.util.Observable, {
         
         // store
         grid.getStore().on("load", function(store, records, options){
-            Ext.select('div.x-grid3-row-expanded').replaceClass('x-grid3-row-expanded', 'x-grid3-row-collapsed');
-            this.state = {};
-            this.expandingRowPanel = [];
+              Ext.select('div.x-grid3-row-expanded').replaceClass('x-grid3-row-expanded', 'x-grid3-row-collapsed');
+              this.state = {};
+              for (var id in this.expandingRowPanels) {
+                this.expandingRowPanels[id].destroy();
+              }
+              this.expandingRowPanels = {};
             }, this);
         
         if (this.store) {
@@ -132,14 +137,9 @@ Ext.extend(Ext.grid.PanelRowExpander, Ext.util.Observable, {
         // record.id is more stable than rowIndex for panel item's key; rows can be deleted.
         var panelItemIndex = record.id;
  
-        // init array of expanding row panels if not already inited
-        if ( !this.expandingRowPanel ) {
-            this.expandingRowPanel = [];
-        }
-        
         // Add a new panel to the row body if not already there
-        if ( !this.expandingRowPanel[panelItemIndex] ) {
-            this.expandingRowPanel[panelItemIndex] = new Ext.Panel(
+        if ( !this.expandingRowPanels[panelItemIndex] ) {
+            this.expandingRowPanels[panelItemIndex] = new Ext.Panel(
                 {
                     layout:'fit', // Note, use 'form' to get form field labels to show
                     border: false,
@@ -151,12 +151,12 @@ Ext.extend(Ext.grid.PanelRowExpander, Ext.util.Observable, {
             // all happens *too fast* and the layout does not know that the element we are
             // rendering to actually has a size > 0. 
             (function() {
-              this.expandingRowPanel[panelItemIndex].render(rowBody);
+              this.expandingRowPanels[panelItemIndex].render(rowBody);
             }).defer(100, this);
             
             // Add support for passing along grid resize events to the expander panel
             this.on('resize', function() {
-              this.expandingRowPanel[panelItemIndex].fireEvent('resize');
+              this.expandingRowPanels[panelItemIndex].fireEvent('resize');
             });
         }
     },
