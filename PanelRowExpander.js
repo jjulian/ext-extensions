@@ -56,6 +56,7 @@ Ext.extend(Ext.grid.PanelRowExpander, Ext.util.Observable, {
         grid.getStore().on("load", function(store, records, options){
             Ext.select('div.x-grid3-row-expanded').replaceClass('x-grid3-row-expanded', 'x-grid3-row-collapsed');
             this.state = {};
+            this.expandingRowPanel = [];
             }, this);
         
         if (this.store) {
