@@ -51,6 +51,7 @@ Ext.extend(Ext.grid.PanelRowExpander, Ext.util.Observable, {
         grid.on('render', function(){
             view.mainBody.on( 'mousedown', this.onMouseDown, this );
         }, this);
+        this.relayEvents(grid, ['resize']);
         
         // store
         grid.getStore().on("load", function(store, records, options){
@@ -152,6 +153,11 @@ Ext.extend(Ext.grid.PanelRowExpander, Ext.util.Observable, {
             (function() {
               this.expandingRowPanel[panelItemIndex].render(rowBody);
             }).defer(100, this);
+            
+            // Add support for passing along grid resize events to the expander panel
+            this.on('resize', function() {
+              this.expandingRowPanel[panelItemIndex].fireEvent('resize');
+            });
         }
     },
     
