@@ -142,10 +142,15 @@ Ext.extend(Ext.grid.PanelRowExpander, Ext.util.Observable, {
                     layout:'fit', // Note, use 'form' to get form field labels to show
                     border: false,
                     bodyBorder: false,
-                    renderTo: rowBody,
                     items: this.createExpandingRowPanelItems( record, rowIndex )
                 }
             );
+            // 2009-07-26 12:52am jjulian When renderTo is specified in the config above, it
+            // all happens *too fast* and the layout does not know that the element we are
+            // rendering to actually has a size > 0. 
+            (function() {
+              this.expandingRowPanel[panelItemIndex].render(rowBody);
+            }).defer(100, this);
         }
     },
     
