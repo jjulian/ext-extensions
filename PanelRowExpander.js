@@ -8,7 +8,7 @@
 *    If config.store is passed in, pass a record for the row from that store instead 
 *    of the grid store into the createExpandingRowPanelItems function.
 *
-*    Renamed and incorporated into ext-extensions by jjulian 7/2009. Thanks to "wolf".
+*    Renamed and incorporated into ext-extensions by jjulian 7/2009. Thanks to wolf.
 */
 Ext.grid.PanelRowExpander = function(config){
     Ext.apply(this, config);
@@ -57,8 +57,10 @@ Ext.extend(Ext.grid.PanelRowExpander, Ext.util.Observable, {
             Ext.select('div.x-grid3-row-expanded').replaceClass('x-grid3-row-expanded', 'x-grid3-row-collapsed');
             this.state = {};
             }, this);
-            
-        this.store.load(); // load here instead of in beforeExpand cuz that would wipe out additions to store
+        
+        if (this.store) {
+          this.store.load(); // load here instead of in beforeExpand cuz that would wipe out additions to store
+        }
     },
 
     onMouseDown : function( e, t ) {
@@ -125,10 +127,8 @@ Ext.extend(Ext.grid.PanelRowExpander, Ext.util.Observable, {
     },
     
    createExpandingRowPanel: function( record, rowBody, rowIndex ) {
-    
         // record.id is more stable than rowIndex for panel item's key; rows can be deleted.
         var panelItemIndex = record.id;
-        // var panelItemIndex = rowIndex;
  
         // init array of expanding row panels if not already inited
         if ( !this.expandingRowPanel ) {
@@ -139,11 +139,9 @@ Ext.extend(Ext.grid.PanelRowExpander, Ext.util.Observable, {
         if ( !this.expandingRowPanel[panelItemIndex] ) {
             this.expandingRowPanel[panelItemIndex] = new Ext.Panel(
                 {
-                    // title: 'Custom Fields',
-                    // layout:'fit', // this doesn't put the labels there
+                    layout:'fit', // Note, use 'form' to get form field labels to show
                     border: false,
                     bodyBorder: false,
-                    layout:'form',
                     renderTo: rowBody,
                     items: this.createExpandingRowPanelItems( record, rowIndex )
                 }
