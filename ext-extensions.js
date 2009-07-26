@@ -65,3 +65,18 @@ Ext.applyIf(Ext,{
   }
 
 });
+
+/*
+ * Get a form field component by it's 'name'. Anything within this
+ * panel with a 'name' attribute will match.
+ */
+Ext.override(Ext.form.FormPanel, {
+  findField: function(value) {
+    var array = this.findBy(function(component) {
+      if (component.name === value) {
+        return true;
+      }
+    });
+    return array[0];
+  }
+});
