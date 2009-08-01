@@ -1,3 +1,4 @@
+/*jslint forin: true */
 /**
 *    A RowExpander changed from RowExpander.js in the Ext examples and some ideas taken 
 *    from the forum (http://extjs.com/forum/showthread.php?t=21017&page=3).
@@ -33,8 +34,6 @@ Ext.extend(Ext.grid.PanelRowExpander, Ext.util.Observable, {
     fixed:true,
     dataIndex: '',
     id: 'expander',
-    lazyRender : true,
-    enableCaching: true,
 
     getRowClass : function(record, rowIndex, rowParams, ds){
         // cols: The column count to apply to the body row's TD colspan attribute (defaults to the current column count of the grid).
@@ -78,7 +77,8 @@ Ext.extend(Ext.grid.PanelRowExpander, Ext.util.Observable, {
         }
     },
 
-    renderer : function(v, p, record){
+    // renders the column that will be placed in the grid (the +/- button)
+    renderer : function(v, p, record, rowIndex){
         p.cellAttr = 'rowspan="2"';
         return '<div class="x-grid3-row-expander"> </div>';
     },
@@ -86,7 +86,7 @@ Ext.extend(Ext.grid.PanelRowExpander, Ext.util.Observable, {
     beforeExpand : function(record, rowBody, rowIndex){
         var isContinue = true;
         if(this.fireEvent('beforeexpand', this, record, rowBody, rowIndex, this.store) !== false){
-            if(rowBody.innerHTML == '' || !this.enableCaching) {
+            if(rowBody.innerHTML === '') {
                 this.createExpandingRowPanel( record, rowBody, rowIndex );
             }
         } else {
@@ -126,7 +126,7 @@ Ext.extend(Ext.grid.PanelRowExpander, Ext.util.Observable, {
         // if using additional store passed in config, pass record from it instead of from the grid store
         var recordToPass = this.store ? this.store.getAt(row.rowIndex) : record; 
         var body = Ext.fly(row).child('tr:nth(1) div.x-grid3-row-body', true);
-        if(this.fireEvent('beforcollapse', this, recordToPass, body, row.rowIndex) !== false){
+        if(this.fireEvent('beforecollapse', this, recordToPass, body, row.rowIndex) !== false){
             this.state[record.id] = false;
             Ext.fly(row).replaceClass('x-grid3-row-expanded', 'x-grid3-row-collapsed');
             this.fireEvent('collapse', this, recordToPass, body, row.rowIndex);
