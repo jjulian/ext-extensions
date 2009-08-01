@@ -51,6 +51,7 @@ Ext.extend(Ext.grid.PanelRowExpander, Ext.util.Observable, {
 
         grid.on('render', function(){
             view.mainBody.on( 'mousedown', this.onMouseDown, this );
+            view.on('rowupdated', this.updateRow, this);
         }, this);
         this.relayEvents(grid, ['resize']);
         
@@ -69,6 +70,20 @@ Ext.extend(Ext.grid.PanelRowExpander, Ext.util.Observable, {
         }
     },
 
+    updateRow : function(view, rowIndex, rec){
+      // console.log('expander: id '+rec.id+' updated row='+rowIndex);
+      if (this.expandingRowPanels[rec.id]) {
+        //the expander html element was destroyed by the grid update. destroy the panel
+        this.expandingRowPanels[rec.id].destroy();
+        this.expandingRowPanels[rec.id] = null;
+        var open = Ext.fly(view.getRow(rowIndex)).hasClass('x-grid3-row-expanded');
+        if (open) {
+          //it *was* open...so re-open it
+          this.expandRow(rowIndex);
+        }
+      }
+    },
+    
     onMouseDown : function( e, t ) {
         if(t.className == 'x-grid3-row-expander'){
             e.stopEvent();
