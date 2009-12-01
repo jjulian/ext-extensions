@@ -3,11 +3,13 @@
 *  A RowExpander derived from RowExpander.js in the Ext examples and some ideas taken 
 *  from the forum (http://extjs.com/forum/showthread.php?t=21017&page=3).
 *
-*  Override the createPanel function to make Ext expanded row content (as opposed to 
+*  Override the createPanel function to make an expanded row panel (as opposed to 
 *  using Ext.Template).
 *
-*  If config.store is passed in, pass a record for the row from *that* store instead 
-*  of the grid store into the createPanel function.
+*  Config params:
+*    store: an alternate store. optional. if specified, pass a record for the row from 
+*      *that* store instead of the grid store into the createPanel function.
+*    hideRow: true to cover up the orginal row with the panel. defaults to false.
 *
 *  Renamed and incorporated into ext-extensions by jjulian 7/2009. Thanks to wolf.
 */
@@ -25,6 +27,14 @@ Ext.grid.PanelRowExpander = function(config){
     });
     
     this.expandingRowPanels = {};
+    
+    if (this.hideRow) {
+      // use the beforeexpand event to slide the expanded panel up to cover the original row
+      this.on('beforeexpand', function (expander, record, rowBody, rowIndex) {
+        //force hasLayout using width for IE7
+        Ext.fly(rowBody).setStyle({'margin-top':'-19px','width':'100%','position':'relative'});
+      });
+    }
 };
 
 Ext.extend(Ext.grid.PanelRowExpander, Ext.util.Observable, {

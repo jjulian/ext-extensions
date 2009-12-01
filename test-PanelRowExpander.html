@@ -1,15 +1,15 @@
 <html>
   <head>
-    <link rel="stylesheet" href="ext2/resources/css/ext-all.css" />
+    <!-- <link rel="stylesheet" href="ext2/resources/css/ext-all.css" />
     <script src="ext2/adapter/ext/ext-base.js"></script>
-    <script src="ext2/ext-all-debug.js"></script>
-    <!-- <link rel="stylesheet" href="ext3/resources/css/ext-all.css" />
+    <script src="ext2/ext-all-debug.js"></script> -->
+    <link rel="stylesheet" href="ext3/resources/css/ext-all.css" />
     <script src="ext3/adapter/ext/ext-base-debug.js"></script>
-    <script src="ext3/ext-all-debug.js"></script> -->
+    <script src="ext3/ext-all-debug.js"></script>
 
     <script src="PanelRowExpander.js"></script>
     <script>
-      Ext.BLANK_IMAGE_URL = 'ext2/resources/images/default/s.gif';
+      Ext.BLANK_IMAGE_URL = 'ext3/resources/images/default/s.gif';
 
       MyPanelRowExpander = function(config){
           Ext.apply(this, config);
@@ -18,6 +18,7 @@
       Ext.extend(MyPanelRowExpander, Ext.grid.PanelRowExpander, {
         createPanel: function( record, rowIndex ) {
           return new Ext.Panel({
+            cls: 'my-panel',
             height: 100,
             border: false,
             html: record.get('name')+'<br/>'+record.get('city')+'<br/>'+rowIndex
@@ -34,7 +35,7 @@
       };
 
       Ext.onReady(function(){
-        var expander = new MyPanelRowExpander();
+        var expander = new MyPanelRowExpander({hideRow: true});
         var viewport = new Ext.Viewport({
           layout: 'anchor',
           items: [{
