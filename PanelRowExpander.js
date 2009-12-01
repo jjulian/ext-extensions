@@ -27,14 +27,6 @@ Ext.grid.PanelRowExpander = function(config){
     });
     
     this.expandingRowPanels = {};
-    
-    if (this.hideRow) {
-      // use the beforeexpand event to slide the expanded panel up to cover the original row
-      this.on('beforeexpand', function (expander, record, rowBody, rowIndex) {
-        //force hasLayout using width for IE7
-        Ext.fly(rowBody).setStyle({'margin-top':'-19px','width':'100%','position':'relative'});
-      });
-    }
 };
 
 Ext.extend(Ext.grid.PanelRowExpander, Ext.util.Observable, {
@@ -136,6 +128,11 @@ Ext.extend(Ext.grid.PanelRowExpander, Ext.util.Observable, {
         // if using additional store passed in config, pass record from it instead of from the grid store
         var recordToPass = this.store ? this.store.getAt(row.rowIndex) : record; 
         var rowBody = Ext.DomQuery.selectNode('tr:nth(2) div.x-grid3-row-body', row);
+        if (this.hideRow) {
+          var offset = Ext.fly(row).getHeight(true);
+          //force hasLayout using width for IE7
+          Ext.fly(rowBody).setStyle({'margin-top':offset * -1 + 'px','width':'100%','position':'relative'});
+        }
         if(this.beforeExpand(recordToPass, rowBody, row.rowIndex)){
             this.state[record.id] = true;
             Ext.fly(row).replaceClass('x-grid3-row-collapsed', 'x-grid3-row-expanded');
