@@ -1,15 +1,15 @@
 /*jslint forin: true */
 /**
-*    A RowExpander changed from RowExpander.js in the Ext examples and some ideas taken 
-*    from the forum (http://extjs.com/forum/showthread.php?t=21017&page=3).
+*  A RowExpander derived from RowExpander.js in the Ext examples and some ideas taken 
+*  from the forum (http://extjs.com/forum/showthread.php?t=21017&page=3).
 *
-*    Override the createExpandingRowPanelItems function to make Ext expanded row content
-*    (as opposed to using Ext.Template to make the expanded row content).
+*  Override the createPanel function to make Ext expanded row content (as opposed to 
+*  using Ext.Template).
 *
-*    If config.store is passed in, pass a record for the row from that store instead 
-*    of the grid store into the createExpandingRowPanelItems function.
+*  If config.store is passed in, pass a record for the row from *that* store instead 
+*  of the grid store into the createPanel function.
 *
-*    Renamed and incorporated into ext-extensions by jjulian 7/2009. Thanks to wolf.
+*  Renamed and incorporated into ext-extensions by jjulian 7/2009. Thanks to wolf.
 */
 Ext.grid.PanelRowExpander = function(config){
     Ext.apply(this, config);
@@ -57,13 +57,13 @@ Ext.extend(Ext.grid.PanelRowExpander, Ext.util.Observable, {
         
         // store
         grid.getStore().on("load", function(store, records, options){
-              Ext.select('div.x-grid3-row-expanded').replaceClass('x-grid3-row-expanded', 'x-grid3-row-collapsed');
-              this.state = {};
-              for (var id in this.expandingRowPanels) {
-                this.expandingRowPanels[id].destroy();
-              }
-              this.expandingRowPanels = {};
-            }, this);
+            Ext.select('div.x-grid3-row-expanded').replaceClass('x-grid3-row-expanded', 'x-grid3-row-collapsed');
+            this.state = {};
+            for (var id in this.expandingRowPanels) {
+              this.expandingRowPanels[id].destroy();
+            }
+            this.expandingRowPanels = {};
+          }, this);
         
         if (this.store) {
           this.store.load(); // load here instead of in beforeExpand cuz that would wipe out additions to store
@@ -148,20 +148,14 @@ Ext.extend(Ext.grid.PanelRowExpander, Ext.util.Observable, {
         }
     },
     
-   createExpandingRowPanel: function( record, rowBody, rowIndex ) {
+    createExpandingRowPanel: function( record, rowBody, rowIndex ) {
         // record.id is more stable than rowIndex for panel item's key; rows can be deleted.
         var panelItemIndex = record.id;
  
         // Add a new panel to the row body if not already there
         if ( !this.expandingRowPanels[panelItemIndex] ) {
-            this.expandingRowPanels[panelItemIndex] = new Ext.Panel(
-                {
-                    layout:'fit', // Note, use 'form' to get form field labels to show
-                    border: false,
-                    bodyBorder: false,
-                    items: this.createExpandingRowPanelItems( record, rowIndex )
-                }
-            );
+            this.expandingRowPanels[panelItemIndex] = this.createPanel( record, rowIndex );
+
             // 2009-07-26 12:52am jjulian When renderTo is specified in the config above, it
             // all happens *too fast* and the layout does not know that the element we are
             // rendering to actually has a size > 0. 
@@ -176,14 +170,16 @@ Ext.extend(Ext.grid.PanelRowExpander, Ext.util.Observable, {
         }
     },
     
+    
     /**
-    * Override this method to put Ext form items into the expanding row panel.
-    * @return Array of panel items.
+    * Override this method to create your expanding row panel.
+    * @return a new Ext.Panel or subclass object, not a config with an xtype
     */
-    createExpandingRowPanelItems: function( record, rowIndex ) {
-        var panelItems = [];
-        
-        return panelItems;
+    createPanel: function( record, rowIndex ) {
+        return new Ext.Panel({
+          border: false,
+          html: 'replace me!'
+        });
     }
     
 }); 
