@@ -172,8 +172,10 @@ Ext.extend(Ext.grid.PanelRowExpander, Ext.util.Observable, {
             
             // Add support for passing along grid resize events to the expander panel
             this.on('resize', function() {
-              this.expandingRowPanels[panelItemIndex].fireEvent('resize');
-            });
+              if (this.expandingRowPanels[panelItemIndex]) {
+                this.expandingRowPanels[panelItemIndex].fireEvent('resize');
+              }
+            }, this);
         }
     },
     
