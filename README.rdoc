@@ -7,7 +7,7 @@ Currently implemented:
 * Ext.flattenTree(array) - flattens an array of Nodes with 'children' into one array of Nodes
 * Ext.grid.PanelRowExpander - a RowExpander that renders a panel instead of a Template
 * Ext.form.FormPanel.findField - easily get a field component by name
-* Ext.tree.IndentedTreeNodeUI - an alternate TreeNode UI that wraps and indents text
+* Ext.tree.IndentedTreeNodeUI - an alternate TreeNode UI that wraps and indents text (see example at http://jjulian.github.com/ext-extensions/)
 
 You should provide ExtJS 2.x and 3.x in /ext2 and /ext3 dirs for testing. Tested using ScrewUnit (located in /lib).
 
