@@ -1,0 +1,81 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="ext2/resources/css/ext-all.css" />
+    <script src="ext2/adapter/ext/ext-base.js"></script>
+    <script src="ext2/ext-all-debug.js"></script>
+    <!-- <link rel="stylesheet" href="ext3/resources/css/ext-all.css" />
+    <script src="ext3/adapter/ext/ext-base-debug.js"></script>
+    <script src="ext3/ext-all-debug.js"></script> -->
+    <style>
+      #wrapTree .x-tree-node {
+        white-space: normal;
+      }
+      
+      .x-tree-node table {
+        font: normal 11px arial, tahoma, helvetica, sans-serif;
+        line-height: 17px;
+      }
+    </style>
+
+    <script src="IndentedTreeNodeUI.js"></script>
+    <script>
+      Ext.BLANK_IMAGE_URL = 'ext3/resources/images/default/s.gif';
+      
+      function buildTree(ui) {
+        return {
+          xtype: 'treepanel',
+          lines: false,
+          width: 180,
+          height: 500,
+          root: new Ext.tree.AsyncTreeNode({
+              uiProvider: ui,
+              text: 'Root Root Root Root Root Root ',
+              expanded: true,
+              children: [{
+                  uiProvider: ui,
+                  text: 'First First First First First First ',
+                  expanded: true,
+                  children: [{
+                      uiProvider: ui,
+                      text: 'one one one one one one one ',
+                      leaf: true
+                  }, {
+                      uiProvider: ui,
+                      text: 'two two two two two two two two ',
+                      leaf: true
+                  }]
+              }, {
+                  uiProvider: ui,
+                  text: 'Second Second Second Second Second Second More More More ',
+                  expanded: true,
+                  children: [{
+                      uiProvider: ui,
+                      text: 'one one one one one one one one ',
+                      leaf: true
+                  }]
+              }]
+          })
+        };
+      }
+
+      Ext.onReady(function(){
+        var viewport = new Ext.Viewport({
+          layout: 'column',
+          items: [
+            Ext.apply(buildTree(Ext.tree.TreeNodeUI),{
+              title: 'TreePanel',
+              id: 'origTree'
+            }), Ext.apply(buildTree(Ext.tree.TreeNodeUI),{
+              title: 'white-space: normal',
+              id: 'wrapTree'
+            }), Ext.apply(buildTree(Ext.tree.IndentedTreeNodeUI),{
+              title: 'IndentedTreeNodeUI',
+              id: 'newUITree'
+            })
+          ]
+        });
+      });
+    </script>
+  </head>
+  <body></body>
+</html>

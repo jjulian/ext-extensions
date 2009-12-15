@@ -1,12 +1,13 @@
 = ext-extensions
 
-Some simple extensions to ExtJS 2.2.1 and 3.0.0
+Some simple extensions to ExtJS.
 
 Currently implemented: 
 * Ext.flatten(array) - flattens an array of sub-arrays into one array (2.x only)
 * Ext.flattenTree(array) - flattens an array of Nodes with 'children' into one array of Nodes
 * Ext.grid.PanelRowExpander - a RowExpander that renders a panel instead of a Template
 * Ext.form.FormPanel.findField - easily get a field component by name
+* Ext.tree.IndentedTreeNodeUI - an alternate TreeNode UI that wraps and indents text
 
-ExtJS 2.2.1 and 3.0.0 are loaced in /ext2 and /ext3 dirs. Fully tested using ScrewUnit (located in /lib).
+You should provide ExtJS 2.x and 3.x in /ext2 and /ext3 dirs for testing. Tested using ScrewUnit (located in /lib).
 
