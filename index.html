@@ -1,0 +1,118 @@
+<html>
+  <head>
+    <title>jjulian/ext-extensions</title>
+    <link rel="stylesheet" href="ext/resources/css/ext-all.css" />
+    <script src="ext/ext-base.js"></script>
+    <script src="ext/ext-all.js"></script>
+    <style>
+      #info {
+        margin: 20px;
+        font: normal 14px arial, tahoma, helvetica, sans-serif;
+        width: 80%;
+      }
+      #info h1, #info h2 {
+        font-size: 26px;
+        margin: 10px 0 10px 0;
+      }
+      #info p {
+        margin: 10px 0 10px 0;
+      }
+      
+      #origTree, #wrapTree, #newUITree {
+      	float:left;
+      	margin:20px;
+      }
+
+      #wrapTree .x-tree-node {
+        white-space: normal;
+      }
+      
+      .x-tree-node table {
+        font: normal 11px arial, tahoma, helvetica, sans-serif;
+        line-height: 17px;
+      }
+    </style>
+ 
+    <script src="IndentedTreeNodeUI.js"></script>
+    <script>
+      Ext.BLANK_IMAGE_URL = 'ext/resources/images/default/s.gif';
+      
+      function buildTree(ui) {
+        return new Ext.tree.TreePanel({
+          lines: false,
+          width: 250,
+          height: 400,
+          header: true,
+          root: new Ext.tree.AsyncTreeNode({
+              uiProvider: ui,
+              text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt',
+              expanded: true,
+              children: [{
+                  uiProvider: ui,
+                  text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt',
+                  expanded: true,
+                  children: [{
+                      uiProvider: ui,
+                      text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt',
+                      leaf: true
+                  }, {
+                      uiProvider: ui,
+                      text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt',
+                      leaf: true
+                  }]
+              }, {
+                  uiProvider: ui,
+                  text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt',
+                  expanded: true,
+                  children: [{
+                      uiProvider: ui,
+                      text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt',
+                      leaf: true
+                  }]
+              }]
+          })
+        });
+      }
+ 
+      Ext.onReady(function(){
+        var tree = buildTree(Ext.tree.TreeNodeUI);
+        tree.setTitle('TreePanel');
+        tree.render('origTree');
+
+        var tree = buildTree(Ext.tree.TreeNodeUI);
+        tree.setTitle('white-space: normal');
+        tree.render('wrapTree');
+
+        var tree = buildTree(Ext.tree.IndentedTreeNodeUI);
+        tree.setTitle('IndentedTreeNodeUI');
+        tree.render('newUITree');
+      });
+    </script>
+  </head>
+  <body>
+    <div id="info">
+    <h1>jjulian/ext-extensions</h1>
+    <h2>get the code: <a href="http://github.com/jjulian/ext-extensions">http://github.com/jjulian/ext-extensions</a></h2>
+    <h2>Ext.tree.IndentedTreeNodeUI</h2>
+    <p>This class provides an alternate UI implementation for Ext TreeNodes. Node text
+    will wrap across multiple lines and will be indented.</p>
+    <p>Since text can span multiple "rows", it's advised that you set <code>lines: false</code>
+    in your TreePanel config when using this ui.</p>
+    <p>To use, set <code>uiProvider: Ext.tree.IndentedTreeNodeUI</code> on every node you load.
+    You will also need some css to ensure the new tree nodes look like they should. At the minimum:</p>
+<pre><code>
+.x-tree-node table {
+  font: normal 11px arial, tahoma, helvetica, sans-serif;
+  line-height: 17px;
+}
+</code></pre>
+    <p>The examples below, from left to right, are (1) original TreePanel, (2) original TreePanel with <code>white-space: normal</code> applied to the node, and (3) the <code>uiProvider: Ext.tree.IndentedTreeNodeUI</code>.</p>
+    </div>
+    <div id="origTree"></div>
+    <div id="wrapTree"></div>
+    <div id="newUITree"></div>
+    <div id="info">
+    <h2 style="clear:both;">get the code: <a href="http://github.com/jjulian/ext-extensions">http://github.com/jjulian/ext-extensions</a></h2>
+    </div>
+  </body>
+</html>
