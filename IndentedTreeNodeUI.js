@@ -1,7 +1,7 @@
 /**
  * @class Ext.tree.IndentedTreeNodeUI
  * This class provides an alternate UI implementation for Ext TreeNodes. Node text
- * will wrap across multiple lines and will be indented to the right of the icon.
+ * will wrap across multiple lines and will be indented.
  * <br/>
  * Since text can span multiple "rows", it's advised that you set <code>lines: false</code>
  * in your TreePanel config when using this ui. 
