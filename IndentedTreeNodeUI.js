@@ -29,7 +29,7 @@ Ext.tree.IndentedTreeNodeUI = Ext.extend(Ext.tree.TreeNodeUI, {
           '<img src="', this.emptyIcon, '" class="x-tree-ec-icon x-tree-elbow" />',
           '<img src="', a.icon || this.emptyIcon, '" class="x-tree-node-icon',(a.icon ? " x-tree-node-inline-icon" : ""),(a.iconCls ? " "+a.iconCls : ""),'" unselectable="on" />',
           cb ? ('<input class="x-tree-node-cb" type="checkbox" ' + (a.checked ? 'checked="checked" />' : '/>')) : '',
-          '</td><td style="white-space:normal;"><a hidefocus="on" class="x-tree-node-anchor" href="',href,'" tabIndex="1" ',
+          '</td><td class="x-tree-node-text-cell" style="white-space:normal;"><a hidefocus="on" class="x-tree-node-anchor" href="',href,'" tabIndex="1" ',
            a.hrefTarget ? ' target="'+a.hrefTarget+'"' : "", '><span unselectable="on" style="padding-left:0;">',n.text,"</span></a></td></tr></tbody></table></div>",
           '<ul class="x-tree-node-ct" style="display:none;"></ul>',
           "</li>"].join('');
